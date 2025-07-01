@@ -35,7 +35,10 @@ public class SecurityConfig {
             "/api/auth/register",
             "/api/auth/login",
             "/api/auth/introspect",
-            "/api/auth/google-login"
+            "/api/auth/google-login",
+            "/api/password/forgot",
+            "/api/password/reset",
+            "/api/password/validate-code"
     };
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -44,6 +47,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/password/validate-code").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/blog-categories/getAll").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/blog/getAllBlog").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/membership-packages/getAll").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -95,4 +102,3 @@ public class SecurityConfig {
         return source;
     }
 }
-
