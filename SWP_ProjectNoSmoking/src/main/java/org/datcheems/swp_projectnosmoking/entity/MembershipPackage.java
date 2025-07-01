@@ -1,7 +1,9 @@
 package org.datcheems.swp_projectnosmoking.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Nationalized;
 
 import java.util.Date;
 
@@ -12,11 +14,21 @@ import java.util.Date;
 public class MembershipPackage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private long Id;
+
+    @Nationalized
     private String Name;
+
+    private int Duration;
+
+    @Nationalized
     private String Description;
+
     private Double Price;
-    private Date ReleaseDate;
-    private Date EndDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private Date releaseDate;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private Date endDate;
 
 }
